@@ -22,20 +22,26 @@ public class LibraryMainController {
 	Map<String, Object> newBooklist;
 	Map<String, Object> favorbook = new HashMap<String, Object>();
 	
+	//메인메뉴 베스트/신작/맞춤도서 Controller
 	@RequestMapping("/main")
 	public String main(@RequestParam @Nullable String lm_user,Model model) {
 		map = mainService.BestSellerList();
 		newBooklist = mainService.NewBookList();
 		//유저 맞춤도서 5개
 		String tempStr = (lm_user==null)?"":lm_user;//null처리 매우중요
-		
 		favorbook = mainService.favorbooks(tempStr);
-			
 		model.addAttribute("map", map);
 		model.addAttribute("newBooklist",newBooklist);
 		model.addAttribute("favorbook", favorbook);
 		return "main";
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	@RequestMapping("/main2")
 	public String main2(Model model) {

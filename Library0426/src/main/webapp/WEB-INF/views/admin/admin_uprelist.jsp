@@ -16,7 +16,6 @@
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script type="text/javascript">
   function admin_reservationDelete(reser_id,bookid){
-		alert("반납버튼클릭");
 		var br_id = reser_id;
 		var bk_id = bookid;
 		alert(br_id);
@@ -41,7 +40,6 @@
 	}
   
   function admin_email(){
-	  alert('개식');
 	  var email1 = "${session_email1}";
 	  var email2 = "${session_email2}";
 		alert(email1);
@@ -65,7 +63,6 @@
   }
   
   function test(){
-  	  alert('전체발송테스트');
   	  var temail = "${email.list2[0].temail}";
   	  		//컨트롤러에 보내서 저장하기 위해서 ajax를 쓰는것이다
   	  		alert(temail);

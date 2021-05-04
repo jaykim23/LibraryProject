@@ -16,7 +16,7 @@
          var bk_id = bookid;
          var reservationFlag = '<%=(String)session.getAttribute("session_flag")%>';
       
-       // 1. 세션 비교.
+       //세션 비교.
        if(reservationFlag != "success"){
          alert("로그인이 필요합니다.");
          return false;
@@ -57,6 +57,7 @@
       <td>대여자명</td>
       <td>${session_Name }</td>
    </tr>
+   <!-- 대여일과 반납일을 계산해서 보여주기 DB저장은 query로 -->
    <tr>
       <td>대여일</td>
       <td>

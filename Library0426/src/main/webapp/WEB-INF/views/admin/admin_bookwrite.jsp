@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+	
+<!-- 줄바꿈 taglib -->
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <% pageContext.setAttribute("br","<br>"); %>
 <% pageContext.setAttribute("cn","\n"); %>
+
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -18,6 +22,8 @@
 <link rel="stylesheet" href="../css/admin_writecount.css">
 <link rel="stylesheet" href="../css/admin_write.css">
 <script type="text/javascript">
+
+	// 컨텐츠 내용 작성시 \n \r을 자동으로 <br>로 바꾸는 script
 	function Write(){
 		alert('등록');
 		var str = $('#bk_content').val();

@@ -116,8 +116,10 @@ public class BookServiceImpl implements BookService {
 	public void adminBookWrite(BookDto bookDto,@RequestPart MultipartFile file) {
 		String orgfileName = file.getOriginalFilename();//원본파일이름
 		if(file.getSize() != 0) {
-			String fileUrl = "C:/workspace/Library0426/src/main/resources/static/upload/book/"; //파일 저장 위치
-			long time = System.currentTimeMillis();//이름에 시간추가
+			//파일 저장 위치
+			String fileUrl = "C:/workspace/Library0426/src/main/resources/static/upload/book/"; 
+			//이름에 시간추가
+			long time = System.currentTimeMillis();
 			String uploadFileName = String.format("%d_%s", time, orgfileName);
 			File f = new File(fileUrl+uploadFileName);
 			try {

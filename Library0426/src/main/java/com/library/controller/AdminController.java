@@ -149,19 +149,18 @@ public class AdminController {
 	   }
 	 
 
-	// 관리자페이지 도서등록 완료
+	// 관리자 도서등록 완료
 	@RequestMapping("/admin/admin_bookwrite")
 	public String bookwrite() {
 		return "admin/admin_bookwrite";
 	}
-
+	
 	@RequestMapping("/admin/book_write")
 	@ResponseBody
 	public String book_write(BookDto bookDto, @RequestPart MultipartFile file) {
 		bookService.adminBookWrite(bookDto, file);
 		return "admin/admin_booklist";
 	}
-
 	
 	// 관리자페이지 도서수정 완료
 	@RequestMapping("/admin/admin_bookmodify_view") 

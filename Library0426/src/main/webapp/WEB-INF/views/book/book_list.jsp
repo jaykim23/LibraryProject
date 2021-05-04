@@ -73,6 +73,7 @@
 
 	}
   	
+  	//도서 대여시 대여정보 확인창 띄우기
 	function bookpop(bk_id){
   		var popurl = "../book/bookpop?bk_id="+bk_id;
   		var test = "pop";
@@ -83,6 +84,7 @@
   		window.open(popurl,test,option);
   		
   	}
+  	
   </script>
 </head>
 <body>
@@ -194,6 +196,8 @@
 					<td id="bk_star">${bookDto.bk_star }</td>
 					<td id="bk_amount">${bookDto.bk_amount }</td>
 					<td id="bk_hit">${bookDto.bk_hit }</td>
+					
+					<!-- 도서 대여/수정삭제 세션비교 버튼 출력 -->
 					<c:choose>
 						<c:when test="${session_Name == '관리자'}">
 							<td><div class="table-button"><a href="../admin/admin_bookmodify_view?bk_id=${bookDto.bk_id}"   >수정</a></div></td>

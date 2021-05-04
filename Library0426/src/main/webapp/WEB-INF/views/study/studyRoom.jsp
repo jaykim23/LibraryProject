@@ -186,7 +186,7 @@ function todayBooking(date,time,roomNum) {
 }//todayBooking
 
 
-	/*예약 db에 저장하기*/
+/*예약 db에 저장하기*/
 function roomBookingCheck(roomNum,date) {
 	 if(confirm("연장 하시겠습니까?")){
 		$.ajax({
@@ -213,15 +213,12 @@ function roomBookingCheck(roomNum,date) {
  }//roomBookingCheck
 
 
-	/*시간비교 후 비어있는 시간 예약하기*/
+/*시간비교 후 비어있는 시간 예약하기*/
 function dateCheck(roomNum,date) {
 	if (date == null || date ==''){
 		alert("날짜를 선택해 주세요.");
 		return false;
 	}else{
-		
-	
-	
 	//alert('룸 번호: '+$("#roomNum").val());
 	var sessionUId = "<%=session.getAttribute("session_flag")%>"
 

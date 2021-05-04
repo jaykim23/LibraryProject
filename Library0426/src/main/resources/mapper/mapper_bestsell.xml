@@ -23,6 +23,7 @@
   </select>  
   
     <!--매칭되는 카테고리 불러오기 -->
+    <!--취향에 따라 카테고리에서 검색, seq값인 bk_id desc 정렬해서 rownum 부여,그리고 가져옴 -->
    <select id="selectMatchingBook" resultType="com.library.dto.BookDto">
 		<![CDATA[
 		select * from 

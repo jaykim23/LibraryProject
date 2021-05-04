@@ -65,52 +65,68 @@ public class MainServiceImpl implements MainService {
 		return map;
 	}
 	
-	//유저 맞춤도서 5개
+	//유저 맞춤도서 5개 출력
 		@Override
 		public Map<String, Object> favorbooks(String lm_user) {
 			Map map = new HashMap<String, Object>();
 			String rs="";
-			
+			//회원의 취향(lm_favor)를 가져온다.
 			rs = mainMapper.selectFavorBooks(lm_user);
-			
+			//관심도서가 존재하는지 없는지 비교
 			if(rs==null ||rs.equals("") ) {
-				System.out.println("관심도서 0일 경우, 신규도서or베스트셀러 출력");
 				list = new ArrayList<BookDto>();
+				//없으면 베스트셀러를 출력한다.
 				list = mainMapper.selectBestSeller();
 				map.put("pickresult", list);
 			}else {
+				//매칭되는 도서들 뽑아와서, 저장된 취향을 split함수로 자른다.
 				String[] favors = new String[rs.split(",").length];
 				favors = rs.split(",");
-				
+				//취향 선택 개수에 따라서 Switch문으로 구분
 				switch(favors.length) {
+				//1개일 경우 2,3,4,5 이하 동문.
 				case 1:
 					for(int i=0;i<favors.length;i++) {
-						onebyone =favors[i];
+						//자른 취향을 onebyone이라는 String 변수에 넣는다.
+						onebyone = favors[i];
 						if(i==0) {
+							//취향과 매칭되는 책을 불러와서 취향 1개일때의 ArrayList에 담는다.
 							list0 = mainMapper.selectMatchingBook(onebyone);
+							//각 책들의 primaryKey를 list에 담는다.
 							for(int j=0;j<list0.size();j++) {
 								rs1[j] = list0.get(j).getBk_id();
 							}
 						}
-					}//매칭되는 도서들 뽑아와서, bk_id만 배열에 담기
-
+					}
+					//5권 랜덤으로 섞기 rs1[0] -> temp, temp->rs1[k], rs1[k]-> rs1[0]
 					for(int c=0;c<50;c++) {
-						temp= rs1[0];
+						temp = rs1[0];
 						k=(int)(Math.random()*5);
 						rs1[0] = rs1[k];
-						rs1[k]=temp;
-					}//5권 랜덤으로 섞기
-					
+						rs1[k] = temp;
+					}
+					//5개만 뽑기
 					for(int c=0;c<favorbooks.length;c++) {
-						favorbooks[c]=rs2[c];
-					}//5개만 뽑기
+						//섞인 책의 책번호를 맞춤도서 배열에 넣는다.
+						favorbooks[c] = rs1[c];
+					}
+					//배열의 모든 책 번호를 id에 집에 넣는다.
 					id0= favorbooks[0]; id1=favorbooks[1]; id2=favorbooks[2]; id3=favorbooks[3];id4=favorbooks[4];
-					
+					//매칭되는 5권 select로 검색해오기
 					pickresult = mainMapper.selectShowBook(id0,id1,id2,id3,id4);
-					//매칭되는 5권 리스트에 담기
-					
 					map.put("pickresult", pickresult);
 					break;
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 				case 2:
 					for(int i=0;i<favors.length;i++) {
 						onebyone =favors[i];

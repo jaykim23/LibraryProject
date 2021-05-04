@@ -156,9 +156,12 @@ public class ReservationServiceImpl implements ReservationService {
 		map.put("list", list);
 		return map;
 	}
+	
+	//이메일 전송
 	@Override
 	public void emailCheck(String email) {
 	       try {
+	    	  //마임메시지 활용
 	          MimeMessage msg = send.createMimeMessage();
 	          MimeMessageHelper helper = new MimeMessageHelper(msg, true, "UTF-8");
 	          helper.setTo(email);
@@ -193,7 +196,9 @@ public class ReservationServiceImpl implements ReservationService {
 		reservationMapper.updateBookReservation(rbookDto);
 		
 	}
-
+	
+	
+	//이메일 
 	@Override
 	public Map<String, Object> selecttemail() {
 		Map map = new HashMap<String, Object>();
@@ -204,7 +209,7 @@ public class ReservationServiceImpl implements ReservationService {
 		
 		return map;
 	}
-
+	
 	@Override
 	public void emailCheck2(String temail) {
 		String[] email = temail.split(",");

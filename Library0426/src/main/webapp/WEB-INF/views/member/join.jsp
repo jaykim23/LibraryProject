@@ -13,7 +13,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <script type="text/javascript">
-function userCheck(){
+ function userCheck(){
 	alert('아이디중복 확인');
 	$.ajax({
 		url:"/userCheck",
@@ -30,68 +30,65 @@ function userCheck(){
 		},
 	});
 }//userCheck
-	
+
+//유효성 검사, 정규표현식
 function joinCheck(){		
-
-// 		var namePtn= /^[가-힣a-zA-Z\s]{1,}$/;
-// 	if(namePtn.test($("#lm_name").val()) !=true){
-// 		alert('한 글자 이상의 이름을 넣어주세요');
-// 		$("#lm_name").next().text('다시 입력해주세요');
-// 		$("#lm_name").val("");
-// 		return false;
-// 	}
-
 	
-// 	var idPtn = /^[a-z][a-z0-9]{3,10}$/;
-// // 	var idPtn = /^[a-z][a-zA-Z]{3,10}$/;
-// 	if(idPtn.test($("#lm_user").val()) !=true){
-// // 		alert('! 첫글자 반드시 영어 소문자,\n영어 대/소문자 조합의 3~10자리로 입력해 주시기 바랍니다.')
-// 		alert('아이디 첫글자는 반드시 영어 소문자,\n영어 소문자와 숫자 조합의 4~10자리로 입력해 주시기 바랍니다.')
-// 		$("#id").next().text("다시 입력해 주세요");
-// 		$("#id").val("");
-// 		return false;
-// 	}
-	
-// // 	var pwPtn = /^(?=.*[~`!@#$%^&*()_\-+={}\[\]\\\|:;"\'<>,.?\/])(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$/;
-// 	var pwPtn = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-// 	if(pwPtn.test($("#lm_pw1").val()) !=true ){
-// // 		alert("특수문자,영문소대문자,숫자 1개이상 포함한 4자리수 이상 비밀번호 설정해주세요");
-// 		alert('비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.');
-// 		$("#lm_pw1").next().text('다시 입력해 주세요');
-// 		$("#lm_pw1").val("");
-// 		$("#lm_pw1").val("");
-// 		return false;		
-// 	}
+	//이름
+ 	var namePtn= /^[가-힣a-zA-Z\s]{1,}$/;
+ 	if(namePtn.test($("#lm_name").val()) !=true){
+ 		alert('한 글자 이상의 이름을 넣어주세요');
+ 		$("#lm_name").next().text('다시 입력해주세요');
+ 		$("#lm_name").val("");
+ 		return false;
+ 	}
 
-// // 	//패스워드 일치 확인
-// 	if($("#lm_pw1").val() != $("#lm_pw2").val()){
-// 		alert('비밀번호가 일치하지 않습니다.');
-// 		$("#lm_pw2").val("");
-// 		return false;
-// 	}
+	//아이디
+ 	var idPtn = /^[a-z][a-z0-9]{3,10}$/;
+ 	if(idPtn.test($("#lm_user").val()) !=true){
+ 		alert('아이디 첫글자는 반드시 영어 소문자,\n영어 소문자와 숫자 조합의 4~10자리로 입력해 주시기 바랍니다.')
+ 		$("#id").next().text("다시 입력해 주세요");
+ 		$("#id").val("");
+ 		return false;
+ 	}
+	//패스워드
+ 	var pwPtn = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+ 	if(pwPtn.test($("#lm_pw1").val()) !=true ){
+ 		alert('비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.');
+ 		$("#lm_pw1").next().text('다시 입력해 주세요');
+ 		$("#lm_pw1").val("");
+ 		return false;		
+ 	}
 
-// 	var em1 = $("#lm_email1").val();
-// 	var em2 = $("#lm_email2").val();
-// 	if(em1=='' || em2==''){
-// 		alert('이메일 주소를 넣어주세요');
-// 		$("#lm_email1").focus();
-// 		return false;
-// 	}
+  	//패스워드 일치 확인
+ 	if($("#lm_pw1").val() != $("#lm_pw2").val()){
+ 		alert('비밀번호가 일치하지 않습니다.');
+ 		$("#lm_pw2").val("");
+ 		return false;
+ 	}
+
+ 	var em1 = $("#lm_email1").val();
+ 	var em2 = $("#lm_email2").val();
+ 	if(em1=='' || em2==''){
+ 		alert('이메일 주소를 넣어주세요');
+ 		$("#lm_email1").focus();
+ 		return false;
+ 	}
 	
-// 	var add1 = $("#lm_address1").val();
-// 	var add2 = $("#lm_address1").val();
-// 	if(add1=='' || add2==''){
-// 		alert('주소를 검색해 주세요');
-// 		return false;
-// 	}
+ 	var add1 = $("#lm_address1").val();
+ 	var add2 = $("#lm_address1").val();
+ 	if(add1=='' || add2==''){
+ 		alert('주소를 검색해 주세요');
+ 		return false;
+ 	}
 	
-// 	var telPtn = /^\d{2,3}\-\d{3,4}\-\d{4}$/;
-// 	if(telPtn.test($("#lm_tel1").val()) != true){
-// 		alert('전화번호(- 포함)를 입력해 주세요!');
-// 		$("#lm_tel1").next().text('다시 입력해 주세요');
-// 		$("#lm_tel1").val("");
-// 		return false;
-// 	}
+ 	var telPtn = /^\d{2,3}\-\d{3,4}\-\d{4}$/;
+ 	if(telPtn.test($("#lm_tel1").val()) != true){
+ 		alert('전화번호(- 포함)를 입력해 주세요!');
+ 		$("#lm_tel1").next().text('다시 입력해 주세요');
+ 		$("#lm_tel1").val("");
+ 		return false;
+ 	}
 	
 	//관심분야 배열저장
  	var favors = [];
@@ -132,7 +129,7 @@ function joinCheck(){
 		},
 	});
 	
-}//joinCheck
+} //joinCheck
 	
 // 	$(function(){
 		
@@ -347,7 +344,7 @@ function joinCheck(){
 					<dd>
 						<input type="checkbox" name="lm_favor" id="lm_favor" value="경제"><label>경제</label>
 						<input type="checkbox" name="lm_favor" id="lm_favor" value="소설"><label>소설</label>
-						<input type="checkbox" name="lm_favor" id="lm_favor" value="IT과학"><label>IT과학</label>
+						<input type="checkbox" name="lm_favor" id="lm_favor" value="IT과학"><label>IT/과학</label>
 						<input type="checkbox" name="lm_favor" id="lm_favor" value="여행"><label>여행</label>
 						<input type="checkbox" name="lm_favor" id="lm_favor" value="종교"><label>종교</label>
 						<input type="checkbox" name="lm_favor" id="lm_favor" value="잡지"><label>잡지</label><br>

@@ -121,20 +121,23 @@ public class StudyServiceImpl implements StudyService {
 	@Override
 	public Map<String, Object> todayCheck(String today) {
 		Map map = new HashMap<String, Object>();
-
+		//1번방 예약리스트
 		trs = 1;
 		roomck= studyMapper.studyroomcheck(trs);
 		map.put("dt1",roomck );
 		room1 = studyMapper.todayOccupiedRoomList(trs, today);
 		trs1 = new int[room1.size()];
+		//1번방의 예약정보를 9-18시까지 돌리기
 		for (int i = 0; i < room1.size(); i++) {
 			trs1[i] = room1.get(i).getRb_time();
 			System.out.println("오늘 1번방: " + trs1[i] + "시");
 		}
+		//2번방 예약리스트
 		trs = 2;
 		roomck= studyMapper.studyroomcheck(trs);
 		map.put("dt2",roomck );
 		room2 = studyMapper.todayOccupiedRoomList(trs, today);
+		
 		trs2 = new int[room2.size()];
 		for (int i = 0; i < room2.size(); i++) {
 			trs2[i] = room2.get(i).getRb_time();
