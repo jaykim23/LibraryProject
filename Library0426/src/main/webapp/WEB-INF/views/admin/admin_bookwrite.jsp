@@ -23,22 +23,29 @@
 <link rel="stylesheet" href="../css/admin_write.css">
 <script type="text/javascript">
 
-	// 컨텐츠 내용 작성시 \n \r을 자동으로 <br>로 바꾸는 script
+	// 컨텐츠 내용 작성시 \n \r을 자동으로 <br>로 바꾸는 script.
 	function Write(){
-		alert('등록');
+		//str에 bk_content의 값을 넣는다.
 		var str = $('#bk_content').val();
+		//str에 있는 줄바꿈인 \r\n,\r,\n을 <br>로 치환.
 		str = str.replace(/(?:\r\n|\r|\n)/g, '<br>');
+		//값을 다시 bk_content에 집어넣음.
 		$('#bk_content').val(str);
 		$.ajax({
+			//controller로 보내는 url
 			url:"./book_write",
 			type:"post",
+			//파일을 보내기 위한 타입정의
 			enctype:"multipart/form-data",
+			//라이트 폼 내에 있는 데이터를 배열에 담아서 보낸다.
 			data: new FormData($('#writeForm')[0]),
+			//데이터 타입은 디폴트로 보내겠다 특정하지 않겠다.
 			processData: false,
 			contentType:false,
 			cache:false,
 			success:function(data){
-    				location.href="../book/book_list";
+				//등록시 리스트로 이동
+    			location.href="../book/book_list";
 			},
 			error:function(){
 				alert("에러");

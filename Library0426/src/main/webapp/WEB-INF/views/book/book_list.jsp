@@ -73,17 +73,22 @@
 
 	}
   	
+ 
   	//도서 대여시 대여정보 확인창 띄우기
 	function bookpop(bk_id){
   		var popurl = "../book/bookpop?bk_id="+bk_id;
+  		//팝업창이름
   		var test = "pop";
+  		//전체 스크린에 띄울 수 있는 위치정보 x,y축
   		var popupX = (window.screen.width / 2) - (500 / 2);
   		var popupY= (window.screen.height / 2) - (500 / 2);
+  		//팝업창의 상세조건
   		var option = "width = 500, height = 500, top ="+popupY+", left ="+popupX+", location = no";
-  		
+  		//팝업창 열기
   		window.open(popurl,test,option);
   		
   	}
+  	
   	
   </script>
 </head>
@@ -197,18 +202,23 @@
 					<td id="bk_amount">${bookDto.bk_amount }</td>
 					<td id="bk_hit">${bookDto.bk_hit }</td>
 					
+					
 					<!-- 도서 대여/수정삭제 세션비교 버튼 출력 -->
 					<c:choose>
+						<!-- session_Name을 비교하여 관리자일 경우 수정,삭제 활성화  -->
 						<c:when test="${session_Name == '관리자'}">
 							<td><div class="table-button"><a href="../admin/admin_bookmodify_view?bk_id=${bookDto.bk_id}"   >수정</a></div></td>
 							<td><div class="table-button" onclick="delete_check('${bookDto.bk_id}')" style="cursor:pointer;"><a>삭제</a></div></td>
 						</c:when>
+						<!-- 남은 책이 있을 경우 대여 버튼을 활성화  -->
 						<c:when test="${bookDto.bk_amount > 0 }">
 							<td>
+							<!-- 대여버튼에 도서 번호를 넣어서 보낸다. -->
 							<div class="table-button" onclick="bookpop(${bookDto.bk_id})">대여</div>
 							</td>
 							<td></td>
 						</c:when>
+						<!-- 남은 책이 없을 경우 대여불가 알림창  -->
 						<c:otherwise>
 							<td>
 							<div class="table-button" onclick="style:alert('대여 불가능합니다.')">대여</div>
@@ -216,6 +226,9 @@
 							<td></td>
 						</c:otherwise>
 					</c:choose>
+				
+					
+					
 			</c:forEach>
 		</table>
 

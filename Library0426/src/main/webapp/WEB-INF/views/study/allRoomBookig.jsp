@@ -20,17 +20,23 @@
   
   
   function open1(roomnum){
+	  		//스터디룸 열기 ajax
 			if(confirm("열으시겠습니까?")){
 			 $.ajax({
+				//컨트롤러로 보내는 URL
 				url:"/roomOpen",
 				type:"post",
 				data:{
+					//방번호값을 보내기
 					"sr_id":$("#roomnum").val(),
 				},
+				//성공시
 				success : function(data) {
 						alert("열림");
+						//페이지 새로고침
 						location.reload();
 				},
+				//실패시
 				error : function() {
 					alert("오픈 실패");
 				},
@@ -40,20 +46,28 @@
 			  return false; 
 		  }
   }
+  
+  
+  
   function close1(){
+			//스터디룸 닫기 ajax
 			if(confirm("닫으시겠습니까?")){
 			 $.ajax({
+				//컨트롤러로 보내는 URL
 				url:"/roomClose",
 				type:"post",
 				traditional:true,
 				data:{
+					//방번호값과 방정보를 보내기
 					"sr_id":$("#roomnum").val(),
 					"sr_info":$("#roominfo").val(),
 				},
+				//성공시
 				success : function(data) {
-						alert("닫쳤습니다.");
+						alert("닫혔습니다.");
 						location.reload();
 				},
+				//실패시
 				error : function() {
 					alert("닫기 실패");
 				},

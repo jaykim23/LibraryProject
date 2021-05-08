@@ -188,7 +188,7 @@ function todayBooking(date,time,roomNum) {
 
 /*예약 db에 저장하기*/
 function roomBookingCheck(roomNum,date) {
-	 if(confirm("연장 하시겠습니까?")){
+	 if(confirm("예약 하시겠습니까?")){
 		$.ajax({
 			url:"/study/roomBookingCheck",
 			type:"post",
@@ -199,6 +199,7 @@ function roomBookingCheck(roomNum,date) {
 				"rb_date":date,
 				"lm_id": <%=session.getAttribute("session_id")%>
 			},
+			
 			success : function(data) {
 					alert(data.rs);
 					location.reload();
@@ -213,41 +214,45 @@ function roomBookingCheck(roomNum,date) {
  }//roomBookingCheck
 
 
-/*시간비교 후 비어있는 시간 예약하기*/
+/*다른 날짜 시간비교 후 비어있는 시간 예약하기*/
 function dateCheck(roomNum,date) {
 	if (date == null || date ==''){
 		alert("날짜를 선택해 주세요.");
 		return false;
 	}else{
-	//alert('룸 번호: '+$("#roomNum").val());
+	//session_flag로 로그인이 되었는지 비교한다.
 	var sessionUId = "<%=session.getAttribute("session_flag")%>"
-
+	//로그인이 안되었을 경우
 	if(sessionUId ==null || sessionUId != "success" ){
 		alert('로그인 후 이용 가능합니다. 로그인 해주세요.');
 	}else {
-	
+		/*다른 날짜 시간비교 후 비어있는 시간 예약하기*/
 		$.ajax({
 			url:"/study/dateCheck",
 			type:"post",
 			traditional:true,
 			data:{
-				//"rb_date":$("#date").val(),"sr_id":roomNum
+				//날짜정보 방번호정보 넘겨주기
 				"rb_date":date,"sr_id":roomNum
-				
 			},
 			success : function(data) {
-				console.log(data.rs[0]);
-				
+				//console.log(data.rs[0]);
+					//select박스 활성화 여부를 알려주는 매개변수
 	 				var dis_check="";
+					//select박스 내에 예약중을 알려주는 매개변수
 					var dis_msg="";
+					//select박스를 입력하는 innerhtml 구문
 					var innerStr = "";
+					//innerhtml 시작
 					innerStr = '<select name="timeChoice" id="timeChoice">';
-		  				for(var i= 9;i<= 18;i++){ 
+					//9시부터 18시까지 예약목록을 돌린다.
+					for(var i= 9;i<= 18;i++){ 
 		  					innerStr += '<option value='+i+''; 
 		 					for(var j=0;j<data.rs.length;j++){
-		 						//alert(data.rs[j]+":::"+i);
+		 						//시간대와 데이터에 있는 시간이 일치할 경우, 예약이 있을 경우
 		 						 if(i==data.rs[j]){
-		  						dis_check =' disabled '; 
+		 						//예약 있으니 활성화 안되도록 하는 
+		  						dis_check =' disabled ';
 		  						dis_msg='  [예약 중] ';
 								break;
 								 }
@@ -261,7 +266,8 @@ function dateCheck(roomNum,date) {
 	  				innerStr += '<a href="#" class="timebutton" ';
 	  				innerStr += 'onclick="roomBookingCheck('+roomNum+',\''+date+'\')">';
 	  				innerStr += '<br>_________</a>';
-	  				
+					//innerhtml	끝
+					//다른 날짜 예약 구분 - 방별로
 	  				if(roomNum==1){
 						$('#timeSelect1').html(innerStr);
 	  				}else if(roomNum==2){

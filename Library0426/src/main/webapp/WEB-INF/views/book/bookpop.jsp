@@ -57,23 +57,33 @@
       <td>대여자명</td>
       <td>${session_Name }</td>
    </tr>
+   
+   
    <!-- 대여일과 반납일을 계산해서 보여주기 DB저장은 query로 -->
    <tr>
+      <!-- 데이트 함수를 가져와 대여일 formatting을 한다. 이건 보여주는 값일 뿐이다. 실제 데이터는 impl에서 저장 -->
       <td>대여일</td>
       <td>
+      	<!-- 현재 시간을 가져온다. -->
          <c:set var="now" value="<%=new Date()%>" />
          <c:set var="sysYear"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set>
+         <!-- 대여일 출력 -->
          <c:out value="${sysYear }"/>
       </td>
    </tr>
    <tr>
+      <!-- 데이트 함수를 가져와 반납일 formatting을 한다. 이건 보여주는 값일 뿐이다. 실제 데이터는 impl에서 저장 -->
       <td>반납일</td>
       <td>
+      	<!-- 시간을 가져와 60초 60분 24시간 millisecond를 곱하고 14를 곱해서 2주를 계산한다. -->
          <c:set var="now2" value="<%=new Date(new Date().getTime() + 60*60*24*1000*14)%>" />
          <c:set var="sysYear2"><fmt:formatDate value="${now2}" pattern="yyyy-MM-dd" /></c:set>
+         <!-- 반납일 출력 -->
          <c:out value="${sysYear2 }"/>
       </td>
    </tr>
+   <!-- 여기까지 -->
+   
 </table>
    <div>
    <div class="check" onclick="rsWriteCheck('${map.bookDto.bk_id}')">확인</div>

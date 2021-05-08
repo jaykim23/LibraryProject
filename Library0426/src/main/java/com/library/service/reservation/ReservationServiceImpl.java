@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.mail.MessagingException;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -157,21 +158,27 @@ public class ReservationServiceImpl implements ReservationService {
 		return map;
 	}
 	
+	//여기부터
 	//이메일 전송
 	@Override
 	public void emailCheck(String email) {
-	       try {
-	    	  //마임메시지 활용
+	    //이메일 쓸때의 예외처리 - 이유알아보기   
+		try {
+	    	  //마임메시지 활용 객체 선언
 	          MimeMessage msg = send.createMimeMessage();
 	          MimeMessageHelper helper = new MimeMessageHelper(msg, true, "UTF-8");
+	          //email1,2 를 합쳐서 가져온것
 	          helper.setTo(email);
 	          helper.setSubject("도서반납 안내입니다.");
 	          helper.setText("빌려가신 도서의 반납일이 얼마 남지않았습니다. 반납기일을 지켜주세요.",true);
+	          
+	          //어드민 이메일로 보내는 사람.(재검색)
 	          msg.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(email));
 	          send.send(msg);
 	       }catch(Exception e) {
 	       }
      }
+	//여기까지
 	
 		
 	//나의 대여리스트
@@ -210,20 +217,31 @@ public class ReservationServiceImpl implements ReservationService {
 		return map;
 	}
 	
+	//이메일을 보내는 메소드
 	@Override
 	public void emailCheck2(String temail) {
+		// temail은 email1(아이디), email2(주소)를 합쳐서 불러오고 자른다.
 		String[] email = temail.split(",");
 		  for(int i=0;i<email.length;i++) {
 			  System.out.println(email[i]);
-	 try {
-	          MimeMessage msg = send.createMimeMessage();
+	     
+		 try {		
+		      //mimemessage 객체 선언
+		 	  MimeMessage msg = send.createMimeMessage();
+		 	  //메세지 텍스트 인코딩
 	          MimeMessageHelper helper = new MimeMessageHelper(msg, true, "UTF-8");
+	          //보내는 사람 주소
 	          helper.setTo(email);
+	          //메일 제목
 	          helper.setSubject("도서반납 안내입니다.");
+	          //메일 내용
 	          helper.setText("빌려가신 도서의 반납일이 하루 남았습니다. 반납기일을 지켜주세요.",true);
+	          //여러 사람에게 메일 보내는 메소드
 	          msg.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(email[i]));
-	          send.send(msg);
+	          //메세지 전송
+	          Transport.send(msg);
 	       }catch(Exception e) {
+	    	   e.printStackTrace();
 	       }
 		  }	
 		

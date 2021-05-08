@@ -49,26 +49,22 @@ public class RoomBookingServiceImpl implements RoomBookingService {
 	@Override
   	public Map<String, Object> nextroombooking(RoomBookingDto roombookingDto,String lm_id,String sr_id,String rb_date,String rb_time) {
   		Map map = new HashMap<String, Object>();
-  		
   		Date d= new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String today = sdf.format(d);
-		System.out.println(today);
-		System.out.println(rb_date);
-
+		//주간 대여 초기화 변수
   		int weekCount=0;
+  		//1주간 대여하는 횟수를 불러온다. 당일부터 1주일을 의미한다.
   		weekCount=roomBookingMapper.weekcheck(roombookingDto,lm_id);
-  		System.out.println("주간"+weekCount);
-  		
+  		//일간 대여 초기화 변수
   		int dayCount=0;
+  		//당일 예약 이전 예약을 카운트하는 변수
   		int frontCount=0;
-  			dayCount=roomBookingMapper.daycheck(roombookingDto,lm_id);
-  			System.out.println("일간"+dayCount);  			
-  			frontCount=roomBookingMapper.nextroomcheck(roombookingDto);
-  			System.out.println("앞시간"+frontCount);
-  		
-  		
-  		
+  		//당일 대여횟수 체크
+  		dayCount=roomBookingMapper.daycheck(roombookingDto,lm_id);
+  		//다른 사람 이전시간대 대여여부 체크
+  		frontCount=roomBookingMapper.nextroomcheck(roombookingDto);
+  		//alert로 보낼 구문을 비교문으로 선택해서 보낸다.
   		if(weekCount>=5) {
   			map.put("rs","주간 총 5시간을 모두 사용하셨습니다." );
   		}else if(dayCount>=2) {

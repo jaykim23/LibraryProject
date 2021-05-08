@@ -39,27 +39,36 @@
 			}
 		})
 	}
-  	
+  
+  
+  
   	//대여도서 리스트 관리
 	function subcate(){
+  		//form에 있는 subcate라는 id의 값을 가져온다.
 		var subcate = document.getElementById("subcate").value;
-		alert(subcate);
 		
 		$.ajax({
+			//admin_reservationlist url로 보낸다
 			url:"/admin/admin_reservationlist",
 			type:"post",
 			data:{
 				"subcate":subcate
 			},
 	 		success: function(data){
+	 			//성공시 subcate값을 parameter값으로 넘긴다
 				alert("리스트변경 완료했습니다.");
 				location.href="./admin_reservationlist?subcate="+subcate;
 			},
 			error:function(){
+				//실패시
 				alert("리스트변경 실패!"); 
 			}
 		});	
 	}
+  
+  	
+  	
+  	
 	
 	function test(subcate){
 		alert(subcate)

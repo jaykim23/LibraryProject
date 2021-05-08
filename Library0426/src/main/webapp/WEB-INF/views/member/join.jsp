@@ -13,15 +13,21 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <script type="text/javascript">
+
+//아이디 중복확인을 Ajax로 한건 비동기적 방식이
+//아니면 reload로 인해 입력값이 없어질까봐 씀.
  function userCheck(){
 	alert('아이디중복 확인');
 	$.ajax({
+		// url로 정보를 보낸다.
 		url:"/userCheck",
 		type:"post",
 		traditional:true,
 		data:{
+			//lm_user의 id값을 가져와서 controller로 보냄
 			"lm_user":$("#lm_user").val(),
 		},
+		//성공시 중복이라는 메세지
 		success : function(data) {
 				alert(data.rs);
 		},
@@ -34,20 +40,21 @@
 //유효성 검사, 정규표현식
 function joinCheck(){		
 	
-	//이름
+	//이름패턴-한글,영소,영대 1글자 이상
  	var namePtn= /^[가-힣a-zA-Z\s]{1,}$/;
+ 	//패턴이 안될경우 비교
  	if(namePtn.test($("#lm_name").val()) !=true){
  		alert('한 글자 이상의 이름을 넣어주세요');
- 		$("#lm_name").next().text('다시 입력해주세요');
+ 		//이름 input box 초기화
  		$("#lm_name").val("");
  		return false;
  	}
 
-	//아이디
+	//아이디 패턴-영소/영소,숫자 조합 4-10
  	var idPtn = /^[a-z][a-z0-9]{3,10}$/;
  	if(idPtn.test($("#lm_user").val()) !=true){
- 		alert('아이디 첫글자는 반드시 영어 소문자,\n영어 소문자와 숫자 조합의 4~10자리로 입력해 주시기 바랍니다.')
- 		$("#id").next().text("다시 입력해 주세요");
+ 		alert('아이디 첫글자는 반드시 영어 소문자,\n영어 소문자와 숫자 조합의 4~10자리로 입력해 주시기 바랍니다.');
+ 		//아이디 input box 초기화
  		$("#id").val("");
  		return false;
  	}
@@ -93,16 +100,19 @@ function joinCheck(){
 	//관심분야 배열저장
  	var favors = [];
  	$('input[name="lm_favor"]:checked').each(function(i){
+ 		//취향의 배열 끝에 배열 요소를 추가한다.
  		favors.push($(this).val());
  	});
 		
- 	var sessionUId = "<%=session.getAttribute("session_user") %>"
+ 	<%-- var sessionUId = "<%=session.getAttribute("session_user") %>" --%>
  	
 	$.ajax({
+		//controller로 가는 URL
 		url:"/joinCheck",
 		type:"post",
 		traditional:true,
 		data:{
+			//DB의 도메인에 들어갈 값을 넘긴다.
 			"lm_user":$("#lm_user").val(),
 			"lm_pw1":$("#lm_pw1").val(),
 			"lm_pw2":$("#lm_pw2").val(),
@@ -115,14 +125,18 @@ function joinCheck(){
 			"lm_birth_year":$("#lm_birth_year").val(),
 			"lm_birth_month":$("#lm_birth_month").val(),
 			"lm_birth_day":$("#lm_birth_day").val(),
+			//성별은 체크된 값을 넘긴다.
 			"lm_gender":$('input[name="lm_gender"]:checked').val(),
 			"lm_job":$("#lm_job").val(),
 			"lm_date":$("#lm_date").val(),
+			//취향 체크된 값 전부를 넘긴다.
 			"lm_favor":favors
 		},
 		success : function(data) {
+				//성공시 alert와 함께 메인으로 이동한다.
 				alert(data.rs);
-				location.href="/main?lm_user=sessionUId";
+				location.href="/main";
+				/* location.href="/main?session_user="+sessionUID */
 		},
 		error : function() {
 			alert("회원가입이 실패하였습니다. 관리자에게 문의 바랍니다.");

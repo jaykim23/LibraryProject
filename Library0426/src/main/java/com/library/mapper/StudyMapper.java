@@ -19,6 +19,7 @@ public interface StudyMapper {
 	void roomBooking(RoomBookingDto roombookingDto);
 	//오늘 예약된 전체 룸 리스트
 	List todayOccupiedRoomList(@Param("trs") int trs ,@Param("today") String today);
+	//
 	StudyRoomDto studyroomcheck(int trs);
 	void roomClose(StudyRoomDto studyRoomDto, String sr_info, int sr_id);
 	void roomOpen(StudyRoomDto studyRoomDto, int sr_id);

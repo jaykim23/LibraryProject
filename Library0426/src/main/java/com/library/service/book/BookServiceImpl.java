@@ -112,23 +112,30 @@ public class BookServiceImpl implements BookService {
 	
 	
 	//도서등록
+	//Springboot를 사용했기 때문에 자동으로 bean등록 따로 등록 필요 없음.
 	@Override
 	public void adminBookWrite(BookDto bookDto,@RequestPart MultipartFile file) {
-		String orgfileName = file.getOriginalFilename();//원본파일이름
+		//원본파일이름 파일 저장소에 저장하는 코드
+		String orgfileName = file.getOriginalFilename();
 		if(file.getSize() != 0) {
 			//파일 저장 위치
 			String fileUrl = "C:/workspace/Library0426/src/main/resources/static/upload/book/"; 
-			//이름에 시간추가
+			//이름에 밀리세컨 시간추가
 			long time = System.currentTimeMillis();
+			//업로드될 파일이름 시간+오리지날 파일명
 			String uploadFileName = String.format("%d_%s", time, orgfileName);
+			//파일 객체 선언
 			File f = new File(fileUrl+uploadFileName);
 			try {
+				//저장경로에 실질적으로 file이 생성
 				file.transferTo(f);
 			} catch (Exception e) {
 				e.printStackTrace();
-			}			
+			}
+			//dto의 fileName에 넣는다.
 			bookDto.setBk_filename(uploadFileName);
 		}else {
+			//파일이 없을 경우에는 빈값으로 저장
 			bookDto.setBk_filename("");
 		}		
 		bookMapper.insertBook(bookDto);

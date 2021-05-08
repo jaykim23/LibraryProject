@@ -77,7 +77,6 @@ public class StudyServiceImpl implements StudyService {
 		weekCount = roomBookingMapper.weekcheck(roombookingDto, lm_id);
 		System.out.println("주간" + weekCount);
 		
-		
 		int dayCount = 0;
 		
 		if(rb_date.equals(today)) {
@@ -87,8 +86,6 @@ public class StudyServiceImpl implements StudyService {
 			dayCount = roomBookingMapper.unad_daycheck(roombookingDto, lm_id,rb_date);
 			System.out.println("다른날" + dayCount);
 		}
-		
-		
 
 		if (weekCount >= 5) {
 			map.put("rs", "주간 총 5시간을 모두 사용하셨습니다.");
@@ -101,37 +98,45 @@ public class StudyServiceImpl implements StudyService {
 
 		return map;
 	}
-
+	
+	
+	//다른날 예약하기
 	// 해당 날짜에 기존 예약자가 있는지 확인
 	@Override
 	public int[] dateCheck(RoomBookingDto roombookingDto) {
+		//예약에 대한 정보를 가져온다.
 		list = studyMapper.occupiedRoomList(roombookingDto);
-		List<RoomBookingDto> listMap = list;
-		System.out.println(listMap);
-		rs = new int[listMap.size()];
-		for (int i = 0; i < listMap.size(); i++) {
-			rs[i] = listMap.get(i).getRb_time();
-			System.out.println("기존 예약시간: " + rs[i]);
+		//기존 예약에 대한 정보를 스터디룸 예약페이지의 selectbox로 보낸다.
+		rs = new int[list.size()];
+		//예약시간의 사이즈만큼 돌린다.
+		for (int i = 0; i < list.size(); i++) {
+			rs[i] = list.get(i).getRb_time();
 		}
-
 		return rs;
 	}
-
+	
+	//당일 예약 현황
 	// 오늘 날짜 모든 예약 리스트 불러와서 룸별로 나누기
 	@Override
 	public Map<String, Object> todayCheck(String today) {
 		Map map = new HashMap<String, Object>();
-		//1번방 예약리스트
+		//1번방 번호
 		trs = 1;
+		//방이 열려 있는지 안열려 있는지를 확인한다.
 		roomck= studyMapper.studyroomcheck(trs);
+		//열림 닫힘 여부값을 메인으로 보낸다.
 		map.put("dt1",roomck );
+		//당일 예약 현황리스트를 가져옴
 		room1 = studyMapper.todayOccupiedRoomList(trs, today);
+		//방의 예약 현황을 배열로 만든다.길이는 room1에 있는 사이즈 만큼 만든다.
 		trs1 = new int[room1.size()];
 		//1번방의 예약정보를 9-18시까지 돌리기
 		for (int i = 0; i < room1.size(); i++) {
 			trs1[i] = room1.get(i).getRb_time();
 			System.out.println("오늘 1번방: " + trs1[i] + "시");
 		}
+		
+		
 		//2번방 예약리스트
 		trs = 2;
 		roomck= studyMapper.studyroomcheck(trs);

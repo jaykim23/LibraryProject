@@ -39,13 +39,10 @@
 			}
 		})
 	}
-  
+  //여기서 이메일을 합쳐서 보내준다
   function admin_email(){
-	  alert('개식');
 	  var email1 = "${session_email1}";
 	  var email2 = "${session_email2}";
-		alert(email1);
-		alert(email2);
 		var email = email1+email2;
 		alert(email);
 		
